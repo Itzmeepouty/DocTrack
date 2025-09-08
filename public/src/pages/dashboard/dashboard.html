@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocuTrack - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Include sidebar CSS -->
+    <link rel="stylesheet" href="assets/css/sidebar-css.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-accepted { background: #d1fae5; color: #065f46; }
+        .status-rejected { background: #fee2e2; color: #991b1b; }
+        .status-outgoing { background: #e0e7ff; color: #3730a3; }
+        .status-incoming { background: #fde68a; color: #92400e; }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Include sidebar HTML -->
+    <!-- You can use server-side includes or a templating engine like EJS -->
+    <!-- For example with EJS: <%- include('sidebar') %> -->
+    <!-- Or with plain HTML: -->
+    <div id="sidebar-container">
+        <!-- Content will be loaded here -->
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="main-content p-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-semibold text-gray-800 mb-2">Dashboard</h1>
+            <p class="text-gray-600">Welcome back! Here's what's happening with your documents.</p>
+        </div>
+
+        <!-- Status Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+            <!-- Outgoing Card -->
+            <div class="glass-effect rounded-xl p-6 subtle-shadow card-hover cursor-pointer" onclick="navigateToSection('outgoing')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-3 bg-blue-100 rounded-lg">
+                        <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path>
+                            <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-lg font-medium text-gray-800 mb-2">Outgoing</h3>
+                <p class="text-2xl font-semibold text-gray-900 mb-1">24</p>
+                <p class="text-sm text-gray-600">Documents sent</p>
+            </div>
+
+            <!-- Incoming Card -->
+            <div class="glass-effect rounded-xl p-6 subtle-shadow card-hover cursor-pointer" onclick="navigateToSection('incoming')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-3 bg-yellow-100 rounded-lg">
+                        <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M11.293 12.707a1 1 0 001.414-1.414l-2-2a1 1 0 00-1.414 0l-2 2a1 1 0 001.414 1.414L9 12.414V17a1 1 0 102 0v-4.586l.293.293z"></path>
+                            <path d="M17 5a2 2 0 00-2-2h-1a1 1 0 000 2h1v7h-2l-1 2H8l-1-2H5V5h1a1 1 0 000-2H5a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-lg font-medium text-gray-800 mb-2">Incoming</h3>
+                <p class="text-2xl font-semibold text-gray-900 mb-1">18</p>
+                <p class="text-sm text-gray-600">Documents received</p>
+            </div>
+
+            <!-- Pending Card -->
+            <div class="glass-effect rounded-xl p-6 subtle-shadow card-hover cursor-pointer" onclick="navigateToSection('pending')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-3 bg-orange-100 rounded-lg">
+                        <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-lg font-medium text-gray-800 mb-2">Pending</h3>
+                <p class="text-2xl font-semibold text-gray-900 mb-1">12</p>
+                <p class="text-sm text-gray-600">Awaiting action</p>
+            </div>
+
+            <!-- Accepted Card -->
+            <div class="glass-effect rounded-xl p-6 subtle-shadow card-hover cursor-pointer" onclick="navigateToSection('accepted')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-3 bg-green-100 rounded-lg">
+                        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-lg font-medium text-gray-800 mb-2">Accepted</h3>
+                <p class="text-2xl font-semibold text-gray-900 mb-1">36</p>
+                <p class="text-sm text-gray-600">Documents approved</p>
+            </div>
+
+            <!-- Rejected Card -->
+            <div class="glass-effect rounded-xl p-6 subtle-shadow card-hover cursor-pointer" onclick="navigateToSection('rejected')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-3 bg-red-100 rounded-lg">
+                        <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-lg font-medium text-gray-800 mb-2">Rejected</h3>
+                <p class="text-2xl font-semibold text-gray-900 mb-1">8</p>
+                <p class="text-sm text-gray-600">Documents declined</p>
+            </div>
+        </div>
+
+        <!-- Recent Actions Section -->
+        <div class="glass-effect rounded-xl p-6 subtle-shadow">
+            <h2 class="text-xl font-medium text-gray-800 mb-6">Recent Actions</h2>
+            
+            <div class="space-y-4">
+                <!-- Action Item -->
+                <div class="flex items-center justify-between p-4 bg-white bg-opacity-50 rounded-lg">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-2 bg-blue-100 rounded-lg">
+                            <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-800">Project Proposal - Q2 2025</p>
+                            <p class="text-sm text-gray-600">Sent to Finance Department</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="status-badge status-outgoing">Outgoing</span>
+                        <span class="text-sm text-gray-500">2 hours ago</span>
+                    </div>
+                </div>
+
+                <!-- Action Item -->
+                <div class="flex items-center justify-between p-4 bg-white bg-opacity-50 rounded-lg">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-2 bg-green-100 rounded-lg">
+                            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-800">Budget Report - January 2025</p>
+                            <p class="text-sm text-gray-600">Approved by Management</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="status-badge status-accepted">Accepted</span>
+                        <span class="text-sm text-gray-500">5 hours ago</span>
+                    </div>
+                </div>
+
+                <!-- Action Item -->
+                <div class="flex items-center justify-between p-4 bg-white bg-opacity-50 rounded-lg">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-2 bg-yellow-100 rounded-lg">
+                            <svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M11.293 12.707a1 1 0 001.414-1.414l-2-2a1 1 0 00-1.414 0l-2 2a1 1 0 001.414 1.414L9 12.414V17a1 1 0 102 0v-4.586l.293.293z"></path>
+                                <path d="M17 5a2 2 0 00-2-2h-1a1 1 0 000 2h1v7h-2l-1 2H8l-1-2H5V5h1a1 1 0 000-2H5a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-800">Training Materials Request</p>
+                            <p class="text-sm text-gray-600">Received from HR Department</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="status-badge status-incoming">Incoming</span>
+                        <span class="text-sm text-gray-500">1 day ago</span>
+                    </div>
+                </div>
+
+                <!-- Action Item -->
+                <div class="flex items-center justify-between p-4 bg-white bg-opacity-50 rounded-lg">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-2 bg-orange-100 rounded-lg">
+                            <svg class="w-5 h-5 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-800">Equipment Purchase Order</p>
+                            <p class="text-sm text-gray-600">Awaiting supervisor approval</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="status-badge status-pending">Pending</span>
+                        <span class="text-sm text-gray-500">2 days ago</span>
+                    </div>
+                </div>
+
+                <!-- Action Item -->
+                <div class="flex items-center justify-between p-4 bg-white bg-opacity-50 rounded-lg">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-2 bg-red-100 rounded-lg">
+                            <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-800">Leave Request - Annual Leave</p>
+                            <p class="text-sm text-gray-600">Request declined by supervisor</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="status-badge status-rejected">Rejected</span>
+                        <span class="text-sm text-gray-500">3 days ago</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- View All Actions Button -->
+            <div class="mt-6 text-center">
+                <button class="px-6 py-2 text-blue-600 hover:text-blue-800 font-medium transition-colors">
+                    View All Actions
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include sidebar JavaScript -->
+    <script src="assets/javascript/sidebar-script.js"></script>
+    <script>
+        // Load sidebar content (if not using server-side includes)
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('assets/components/sidebar.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('sidebar-container').innerHTML = html;
+                });
+        });
+    </script>
+</body>
+</html>

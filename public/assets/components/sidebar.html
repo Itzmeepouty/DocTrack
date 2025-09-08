@@ -1,0 +1,89 @@
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar glass-effect">
+    <div class="p-6">
+        <!-- Logo -->
+        <div class="flex items-center mb-8">
+            <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl mr-3 subtle-shadow">
+                <i class="fas fa-file-alt text-gray-800 text-xl"></i>
+            </div>
+            <div class="sidebar-text">
+                <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                    DocuTrack
+                </h2>
+            </div>
+        </div>
+        
+        <!-- Toggle Button -->
+        <button onclick="toggleSidebar()" class="absolute top-6 right-4 p-2 text-gray-500 hover:text-gray-700 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors">
+            <i id="toggle-icon" class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Navigation Items -->
+        <nav class="space-y-2">
+            <!-- Outgoing -->
+            <a href="#" onclick="navigateToSection('outgoing')" class="sidebar-item flex items-center p-3 text-gray-700 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors">
+                <i class="fas fa-paper-plane fa w-5 h-5 mr-3"></i>
+                <span class="sidebar-text">Outgoing</span>
+                <div class="tooltip">Outgoing</div>
+            </a>
+            
+            <!-- Incoming -->
+            <a href="#" onclick="navigateToSection('incoming')" class="sidebar-item flex items-center p-3 text-gray-700 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors">
+                <i class="fas fa-inbox fa w-5 h-5 mr-3"></i>
+                <span class="sidebar-text">Incoming</span>
+                <div class="tooltip">Incoming</div>
+            </a>
+            
+            <!-- Pending -->
+            <a href="#" onclick="navigateToSection('pending')" class="sidebar-item flex items-center p-3 text-gray-700 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors">
+                <i class="fas fa-clock fa w-5 h-5 mr-3"></i>
+                <span class="sidebar-text">Pending</span>
+                <div class="tooltip">Pending</div>
+            </a>
+            
+            <!-- Accepted -->
+            <a href="#" onclick="navigateToSection('accepted')" class="sidebar-item flex items-center p-3 text-gray-700 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors">
+                <i class="fas fa-check fa w-5 h-5 mr-3"></i>
+                <span class="sidebar-text">Accepted</span>
+                <div class="tooltip">Accepted</div>
+            </a>
+            
+            <!-- Rejected -->
+            <a href="#" onclick="navigateToSection('rejected')" class="sidebar-item flex items-center p-3 text-gray-700 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors">
+                <i class="fas fa-times fa w-5 h-5 mr-3"></i>
+                <span class="sidebar-text">Rejected</span>
+                <div class="tooltip">Rejected</div>
+            </a>
+            
+            <hr class="border-gray-200 my-4">
+            
+            <!-- History -->
+            <a href="#" onclick="navigateToSection('history')" class="sidebar-item flex items-center p-3 text-gray-700 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors">
+                <i class="fas fa-history fa w-5 h-5 mr-3"></i>
+                <span class="sidebar-text">History</span>
+                <div class="tooltip">History</div>
+            </a>
+            
+            <!-- User Profile -->
+            <a href="#" onclick="navigateToSection('profile')" class="sidebar-item flex items-center p-3 text-gray-700 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors">
+                <i class="fas fa-user fa w-5 h-5 mr-3"></i>
+                <span class="sidebar-text">User Profile</span>
+                <div class="tooltip">User Profile</div>
+            </a>
+            
+            <!-- Settings -->
+            <a href="#" onclick="navigateToSection('settings')" class="sidebar-item flex items-center p-3 text-gray-700 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors">
+                <i class="fas fa-cog fa w-5 h-5 mr-3"></i>
+                <span class="sidebar-text">Settings</span>
+                <div class="tooltip">Settings</div>
+            </a>
+            
+            <!-- Logout -->
+            <a href="#" onclick="navigateToSection('logout')" class="sidebar-item flex items-center p-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                <i class="fas fa-sign-out-alt fa w-5 h-5 mr-3"></i>
+                <span class="sidebar-text">Logout</span>
+                <div class="tooltip">Logout</div>
+            </a>
+        </nav>
+    </div>
+</div>

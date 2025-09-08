@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocuTrack - User Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+    <!-- Include sidebar CSS -->
+    <link rel="stylesheet" href="/assets/css/admin-sidebar.css">
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .subtle-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-active { 
+            background: #d1fae5; 
+            color: #065f46; 
+        }
+        .status-inactive { 
+            background: #fee2e2; 
+            color: #991b1b; 
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .search-input {
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-row {
+            transition: all 0.2s ease;
+        }
+
+        .table-row:hover {
+            background: rgba(59, 130, 246, 0.1) !important;
+        }
+
+        .pagination-btn {
+            transition: all 0.2s ease;
+        }
+
+        .pagination-btn:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Additional hover effects for interactive elements */
+        .status-badge:hover {
+            opacity: 0.9;
+        }
+        
+        .action-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .action-btn:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Include sidebar HTML -->
+    <div id="sidebar-container">
+        <!-- Content will be loaded here -->
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="main-content p-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-semibold text-gray-800 mb-2">Accounts Management</h1>
+            <p class="text-gray-600">Manage user accounts and their configurations.</p>
+        </div>
+
+        <!-- Controls Section -->
+        <div class="glass-effect rounded-xl p-6 subtle-shadow mb-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                <!-- Right side - Search and Filter -->
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                    <!-- Search Bar -->
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <input type="text" 
+                               id="searchInput"
+                               placeholder="Search users..." 
+                               class="search-input pl-10 pr-4 py-3 bg-white bg-opacity-70 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-64">
+                    </div>
+
+                    <!-- Status Filter -->
+                    <select id="statusFilter" class="px-4 py-3 bg-white bg-opacity-70 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">All Status</option>
+                        <option value="activated">Activated</option>
+                        <option value="unverified">Unverified</option>
+                        <option value="blocked">Blocked</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="glass-effect rounded-xl subtle-shadow overflow-hidden">
+            <!-- Table Header -->
+            <div class="px-6 py-4 border-b border-gray-200 bg-white bg-opacity-50">
+                <h2 class="text-lg font-medium text-gray-800">Registered Accounts</h2>
+            </div>
+
+            <!-- Table Content -->
+            <div id="tableContainer" class="overflow-x-auto">
+                <table id="userTable" class="w-full">
+                    <!-- Table will be populated dynamically -->
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div id="paginationControls" class="px-6 py-4 border-t border-gray-200 bg-white bg-opacity-30">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-600">
+                        Showing <span class="font-medium" id="startItem">1</span> to 
+                        <span class="font-medium" id="endItem">5</span> of 
+                        <span class="font-medium" id="totalItems">0</span> results
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="prevBtn" class="pagination-btn px-3 py-2 text-sm bg-white bg-opacity-70 border border-gray-200 rounded-lg hover:bg-opacity-90 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Previous
+                        </button>
+                        <div id="pageButtons" class="flex space-x-2">
+                            <!-- Page buttons will be inserted here by JavaScript -->
+                        </div>
+                        <button id="nextBtn" class="pagination-btn px-3 py-2 text-sm bg-white bg-opacity-70 border border-gray-200 rounded-lg hover:bg-opacity-90 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include sidebar JavaScript -->
+    <script src="/assets/javascript/admin-sidebar.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script type="module" src="/src/pages/admin-accounts/index.js"></script>
+</body>
+</html>

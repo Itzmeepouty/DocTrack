@@ -22,7 +22,7 @@ async function loginUser(event){
         const data = await res.json();
         
         if (res.ok) {
-            const token = data.token;
+            const token = data.accessToken;
             localStorage.setItem('token', token);
 
             const payload = JSON.parse(atob(token.split('.')[1]));

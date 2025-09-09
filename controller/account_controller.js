@@ -32,32 +32,60 @@ async function GetUserCount(req, res) {
 //login controller
 async function loginUsercontroller(req, res) {
   const { email, password } = req.body;
+
   try {
     const user = await loginUser(email);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.passs);
-
-    if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid password' });
+    if (user.acc_status !== 'activated') {
+      return res.status(403).json({ error: 'Account not verified' });
+    }
+    if (!user.is_active) {
+      return res.status(403).json({ error: 'Account is inactive' });
     }
 
-    const token = jwt.sign({ 
-        id: user.employee_id, 
-        fname: user.fname, 
-        mname: user.name, 
-        lname: user.lname,  
+    const isPasswordValid = await bcrypt.compare(password, user.passs);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    console.log("JWT_SECRET:", process.env.JWT_SECRET);
+
+    const accessToken = jwt.sign(
+      {
+        id: user.employee_id,
+        fname: user.fname,
+        mname: user.mname,
+        lname: user.lname,
         email: user.email,
         office: user.office,
-        acc_status: user.acc_status,
-        role: user.acc_permission
+        role: user.acc_permission,
+        acc_status: user.acc_status
       },
-    process.env.JWT_SECRET, { expiresIn: '1h' });
+      process.env.JWT_SECRET,
+      { expiresIn: '15m' }
+    );
+
+    const refreshToken = jwt.sign(
+      { id: user.employee_id },
+      process.env.JWT_REFRESH_SECRET,
+      { expiresIn: '7d' }
+    );
 
     console.log(`✅ Login successful for user: ${email}`);
-    res.status(200).json({ token, user });
+
+    return res.status(200).json({
+      accessToken,
+      refreshToken,
+      user: {
+        id: user.employee_id,
+        email: user.email,
+        name: `${user.fname} ${user.lname}`,
+        role: user.acc_permission
+      }
+    });
 
   } catch (error) {
     console.error('Error logging in:', error);

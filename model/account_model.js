@@ -51,9 +51,6 @@ async function loginUser(email) {
   const sql = 'SELECT * FROM staffs WHERE email = @email';
 
   const rows = await query(sql, { email });
-
-  console.log('Login user:', email, 'Query result:', rows);
-
   return rows.length ? rows[0] : null;
 }
 

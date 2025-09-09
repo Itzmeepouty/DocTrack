@@ -1,7 +1,7 @@
 const { query } = require('../db/dbconn.js');
 
 async function getLog(){
-    const sql = `select * from activity_log order by log_id desc`;
+    const sql = `select top 5 * from activity_log order by log_id desc`;
 
     try {
         const result = await query(sql);

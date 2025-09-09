@@ -25,8 +25,7 @@ export class ModalManager {
         try {
             const res = await OfficeAPI.create(data);
 
-            // 🔑 Adjusted to new backend response
-            const created = res.office;   // controller now returns an object, not array
+            const created = res.office;
             const id = created.office_id;
 
             OfficeState.add({
@@ -80,12 +79,10 @@ export class ModalManager {
         const modal = document.getElementById('deleteConfirmModal');
         modal.classList.remove('hidden');
 
-        // Cancel button
         document.getElementById('cancelDeleteBtn').onclick = () => {
             modal.classList.add('hidden');
         };
 
-        // Confirm button
         document.getElementById('confirmDeleteBtn').onclick = async () => {
             try {
                 await OfficeAPI.delete(id);
@@ -97,7 +94,7 @@ export class ModalManager {
                 console.error(err);
             } finally {
                 modal.classList.add('hidden');
-                this.closeAll(); // close update modal too
+                this.closeAll();
             }
         };
     }

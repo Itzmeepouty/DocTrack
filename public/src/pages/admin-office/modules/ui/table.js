@@ -76,19 +76,16 @@ export class OfficeTable {
         pageButtons.innerHTML = '';
 
         if (totalPages <= 4) {
-            // Show all pages if few enough
             for (let i = 1; i <= totalPages; i++) {
                 pageButtons.appendChild(this.createPageButton(i));
             }
         } else {
-            // Always show first page
             pageButtons.appendChild(this.createPageButton(1));
 
             if (this.currentPage > 3) {
                 pageButtons.appendChild(this.createEllipsis());
             }
 
-            // Show current -1, current, current +1
             const start = Math.max(2, this.currentPage - 1);
             const end = Math.min(totalPages - 1, this.currentPage + 1);
             for (let i = start; i <= end; i++) {
@@ -99,11 +96,9 @@ export class OfficeTable {
                 pageButtons.appendChild(this.createEllipsis());
             }
 
-            // Always show last page
             pageButtons.appendChild(this.createPageButton(totalPages));
         }
 
-        // Prev/Next buttons
         document.getElementById('prevBtn').disabled = this.currentPage === 1;
         document.getElementById('nextBtn').disabled = this.currentPage === totalPages;
 

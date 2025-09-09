@@ -8,6 +8,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const emailTemplates = require('../templates/email_template.js');
+const { v4: uuidv4 } = require('uuid');
+const { addToBlacklist } = require('../middleware/blacklist.js');
 
 //function to get all users
 async function getAllUsers(req, res) {
@@ -55,6 +57,7 @@ async function loginUsercontroller(req, res) {
 
     const accessToken = jwt.sign(
       {
+        jti: uuidv4(),
         id: user.employee_id,
         fname: user.fname,
         mname: user.mname,
@@ -90,6 +93,24 @@ async function loginUsercontroller(req, res) {
   } catch (error) {
     console.error('Error logging in:', error);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+//logout controller
+async function logoutUser(req, res) {
+  try {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) return res.status(400).json({ error: 'Token required' });
+
+    const token = authHeader.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    addToBlacklist(decoded.jti, decoded.exp);
+
+    return res.status(200).json({ message: 'Logged out successfully' });
+  } catch (error) {
+    console.error('Error during logout:', error);
+    return res.status(400).json({ error: 'Invalid token' });
   }
 }
 
@@ -201,5 +222,5 @@ async function verifyuser(req, res) {
 }
 
 module.exports = {
-  getAllUsers, loginUsercontroller, createUser, verifyuser, GetUserCount
+  getAllUsers, loginUsercontroller, createUser, verifyuser, GetUserCount, logoutUser
 };

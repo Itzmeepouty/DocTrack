@@ -4,7 +4,8 @@ const { getAllUsers,
     loginUsercontroller, 
     createUser, 
     verifyuser, 
-    GetUserCount } = require('../../controller/account_controller.js');
+    GetUserCount,
+    logoutUser } = require('../../controller/account_controller.js');
 const { getAllOffices, 
     getAllActiveOffices,
     GetOfficeCount, 
@@ -19,6 +20,7 @@ router.post('/login', loginUsercontroller);
 router.post('/signup', createUser);
 router.post('/verify',verifyuser);
 router.get('/users/count', GetUserCount);
+router.post('/logout', logoutUser)
 
 
 //office management

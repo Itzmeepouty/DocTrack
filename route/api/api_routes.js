@@ -13,6 +13,7 @@ const { getAllOffices,
     updateOffice, 
     deleteoffice } = require('../../controller/office_controller.js');
 const { getAllLogs } = require('../../controller/log_controller.js');
+const { authenticateToken } = require('../../middleware/auth.js');
 
 //account management
 router.get('/users', getAllUsers);
@@ -33,5 +34,10 @@ router.delete('/office/delete/:id', deleteoffice);
 
 //log management
 router.get('/logs', getAllLogs);
+
+//token management
+router.get('/validate-token', authenticateToken, (req, res) => {
+    res.status(200).json({ valid: true, user: req.user });
+});
 
 module.exports = router;

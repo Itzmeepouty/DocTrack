@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { isBlacklisted } = require('../utils/blacklist');
+
+const { isBlacklisted } = require('../middleware/blacklist.js');
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
@@ -21,3 +22,5 @@ function authenticateToken(req, res, next) {
     return res.status(403).json({ error: 'Forbidden: Invalid token' });
   }
 }
+
+module.exports =  { authenticateToken };

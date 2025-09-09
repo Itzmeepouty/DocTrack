@@ -39,8 +39,8 @@ router.get('/accounts/management', (req, res) => {
 
 
 //sample for testing
-router.get('/sample', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../public/src/pages/sample/sample.html'));
+router.get('/settings', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../public/src/pages/settings/settings.html'));
 });
 
 module.exports = router;

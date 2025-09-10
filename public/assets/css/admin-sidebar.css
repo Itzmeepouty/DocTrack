@@ -18,7 +18,6 @@
 /* Main content adjusts based on sidebar width */
 .main-content {
     margin-left: 20vw;
-    /* min-margin-left: 280px; */
     transition: all 0.3s ease;
     padding: 2rem;
 }
@@ -31,6 +30,12 @@
     transition: all 0.3s ease;
     white-space: nowrap;
     position: relative;
+}
+
+.sidebar-item.active {
+    background: rgba(59, 130, 246, 0.1) !important;
+    color: #3b82f6 !important;
+    border-left: 3px solid #3b82f6;
 }
 
 .sidebar-text {
@@ -91,7 +96,7 @@
     transform: translateX(0);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: visible; /* Changed from hidden to visible for tooltips */
+    overflow: visible;
 }
 
 .sidebar-item::before {
@@ -243,15 +248,6 @@
     margin-top: 2rem;
 }
 
-/* Demo content styling */
-.demo-content {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    padding: 2rem;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
 /* Tailwind-like utility classes */
 .flex { display: flex; }
 .items-center { align-items: center; }
@@ -286,6 +282,71 @@
 .absolute { position: absolute; }
 .top-6 { top: 1.5rem; }
 .right-4 { right: 1rem; }
+
+/* Dark theme styles for sidebar */
+body.dark-theme .sidebar {
+    background: rgba(30, 41, 59, 0.9) !important;
+    border-right: 1px solid rgba(71, 85, 105, 0.4);
+}
+
+body.dark-theme .sidebar-item {
+    color: #cbd5e1 !important;
+}
+
+body.dark-theme .sidebar-item:hover {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+}
+
+body.dark-theme .sidebar-item.active {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+    border-left-color: #60a5fa;
+}
+
+body.dark-theme .text-gray-800 {
+    color: #f1f5f9 !important;
+}
+
+body.dark-theme .text-gray-700 {
+    color: #cbd5e1 !important;
+}
+
+body.dark-theme .text-gray-500 {
+    color: #94a3b8 !important;
+}
+
+body.dark-theme .bg-gray-100 {
+    background-color: #475569 !important;
+}
+
+body.dark-theme .border-gray-200 {
+    border-color: #475569 !important;
+}
+
+body.dark-theme #logoutModal .bg-white {
+    background-color: #1e293b !important;
+}
+
+body.dark-theme #logoutModal .text-gray-800 {
+    color: #f1f5f9 !important;
+}
+
+body.dark-theme #logoutModal .text-gray-600 {
+    color: #94a3b8 !important;
+}
+
+body.dark-theme #logoutModal .text-gray-700 {
+    color: #cbd5e1 !important;
+}
+
+body.dark-theme #logoutModal .bg-gray-300 {
+    background-color: #475569 !important;
+}
+
+body.dark-theme #logoutModal .hover\:bg-gray-400:hover {
+    background-color: #64748b !important;
+}
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {

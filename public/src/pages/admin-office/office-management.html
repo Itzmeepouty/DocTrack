@@ -14,8 +14,9 @@
     <!-- Include sidebar CSS -->
     <link rel="stylesheet" href="/assets/css/admin-sidebar.css">
     <link rel="stylesheet" href="/src/pages/admin-office/style.css">
+    
 </head>
-<body class="gradient-bg min-h-screen">
+<body class="gradient-bg min-h-screen" id="body">
     <!-- Include sidebar HTML -->
     <div id="sidebar-container">
         <!-- Content will be loaded here -->
@@ -60,7 +61,7 @@
                     </div>
 
                     <!-- Status Filter -->
-                    <select id="statusFilter" class="px-4 py-3 bg-white bg-opacity-70 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <select id="statusFilter" class="px-8 py-3 bg-white bg-opacity-70 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">All Status</option>
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
@@ -202,14 +203,14 @@
     </div>
 
     <!-- Update Office Modal -->
-    <div id="updateOfficeModal" class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center p-4">
-        <div class="w-full max-w-lg bg-white rounded-2xl overflow-hidden shadow-xl">
+    <div id="updateOfficeModal" class="fixed inset-0 bg-black bg-opacity-40 modal-backdrop hidden z-50 flex items-center justify-center p-4">
+        <div class="modal-container rounded-2xl overflow-hidden w-full max-w-lg">
             <!-- Modal Header -->
-            <div class="px-8 py-6 flex items-center justify-between border-b border-gray-200">
+            <div class="modal-header px-8 py-6 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.380-8.379-2.83-2.828z"></path>
                         </svg>
                     </div>
                     <div>
@@ -217,7 +218,7 @@
                         <p class="text-sm text-gray-600 mt-1">Modify office information and settings</p>
                     </div>
                 </div>
-                <button class="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-gray-100 modal-close-btn">
+                <button class="modal-close-btn w-10 h-10 rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                     </svg>
@@ -234,7 +235,7 @@
                         <!-- Office ID (uneditable) -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Office ID</label>
-                            <div class="w-full px-4 py-3 bg-gray-50 rounded-xl text-sm text-gray-900" id="OfficeId">
+                            <div class="form-input w-full px-4 py-3 rounded-xl focus:outline-none" id="OfficeId">
                             </div>
                         </div>
                         
@@ -244,7 +245,7 @@
                             <input type="text" 
                                 id="updateOfficeName" 
                                 required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                                class="form-input w-full px-4 py-3 rounded-xl focus:outline-none">
                         </div>
                         
                         <!-- Abbreviation -->
@@ -254,14 +255,14 @@
                                 id="updateOfficeAbbr" 
                                 required
                                 maxlength="5"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 uppercase transition-colors">
+                                class="form-input w-full px-4 py-3 rounded-xl focus:outline-none uppercase">
                         </div>
                         
                         <!-- Status -->
                         <div>
                             <label for="updateOfficeStatus" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
                             <select id="updateOfficeStatus" 
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                                    class="form-input w-full px-4 py-3 rounded-xl focus:outline-none appearance-none">
                                 <option value="active">Active</option>
                                 <option value="inactive">Inactive</option>
                             </select>
@@ -271,14 +272,14 @@
                     <!-- Form Actions -->
                     <div class="flex flex-col gap-4 pt-4">
                         <div class="flex gap-4">
-                            <button type="button" class="flex-1 px-6 py-3 border border-gray-300 rounded-xl font-medium hover:bg-gray-50 transition-colors modal-close-btn">
+                            <button type="button" class="btn-cancel flex-1 px-6 py-3 rounded-xl font-medium modal-close-btn">
                                 Cancel
                             </button>
-                            <button type="submit" class="flex-1 px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors">
+                            <button type="submit" class="btn-primary flex-1 text-white px-6 py-3 rounded-xl font-medium">
                                 Update Office
                             </button>
                         </div>
-                        <!-- Delete Button - Corrected ID -->
+                        <!-- Delete Button -->
                         <button type="button" id="deleteOfficeBtn" class="w-full px-6 py-3 bg-red-100 text-red-700 rounded-xl font-medium hover:bg-red-200 transition-colors flex items-center justify-center">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -290,7 +291,6 @@
             </div>
         </div>
     </div>
-
     <!-- Delete Confirmation Modal -->
     <div id="deleteConfirmModal" class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center p-4">
         <div class="w-full max-w-md bg-white rounded-2xl overflow-hidden shadow-xl">

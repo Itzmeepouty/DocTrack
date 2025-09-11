@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocuTrack - Settings</title>
+    <title>DocuTrack - Settings (With Switch Animations)</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="/assets/css/admin-sidebar.css">
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            transition: all 0.3s ease;
         }
         
         .gradient-bg {
@@ -46,19 +42,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
         
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-        }
-        
-        .card-hover:hover.dark {
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-        }
-        
         /* Theme Toggle Switch */
         .theme-switch {
             position: relative;
@@ -81,8 +64,8 @@
             right: 0;
             bottom: 0;
             background-color: #ccc;
-            transition: .4s;
             border-radius: 34px;
+            transition: all 0.3s ease-in-out;
         }
         
         .slider:before {
@@ -93,8 +76,8 @@
             left: 4px;
             bottom: 4px;
             background-color: white;
-            transition: .4s;
             border-radius: 50%;
+            transition: all 0.3s ease-in-out;
         }
         
         input:checked + .slider {
@@ -105,21 +88,34 @@
             transform: translateX(26px);
         }
         
+        /* Add a pulsing animation when toggling */
+        input:focus + .slider {
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+        
+        /* Smooth transition for the switch background in dark mode */
+        body.dark-theme .slider {
+            background-color: #64748b;
+        }
+        
+        body.dark-theme input:checked + .slider {
+            background-color: #60a5fa;
+        }
+        
         .save-button {
             background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
         
         .save-button:hover {
             background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+            transform: translateY(-1px);
         }
         
         .setting-item {
             padding: 1.5rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            transition: background-color 0.2s ease;
         }
         
         .setting-item:hover {
@@ -137,14 +133,10 @@
             border-radius: 0.375rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        
-        .theme-preview:hover {
-            transform: scale(1.05);
+            transition: all 0.2s ease;
         }
         
         .theme-preview.active {
@@ -228,17 +220,13 @@
         body.dark-theme svg {
             color: inherit !important;
         }
-        
-        /* Animation for smooth transitions */
-        * {
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
     </style>
+    <link rel="stylesheet" href="/assets/css/admin-sidebar.css">
 </head>
 <body class="gradient-bg min-h-screen" id="body">
-    <!-- Include sidebar HTML -->
+
     <div id="sidebar-container">
-        <!-- Sidebar content will be loaded here -->
+        <!-- Content will be loaded here -->
     </div>
 
     <!-- Main Content -->
@@ -344,7 +332,7 @@
 
             <!-- Action Buttons -->
             <div class="flex justify-end space-x-4">
-                <button class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors" onclick="resetSettings()">
+                <button class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200" onclick="resetSettings()">
                     Reset to Defaults
                 </button>
                 <button class="px-6 py-3 save-button text-white rounded-lg font-medium" onclick="saveSettings()">
@@ -354,7 +342,7 @@
             </div>
 
             <!-- Success Message -->
-            <div id="success-message" class="hidden mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+            <div id="success-message" class="hidden mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg transition-opacity duration-300">
                 <i class="fas fa-check-circle mr-2"></i>
                 Settings saved successfully!
             </div>
@@ -362,29 +350,6 @@
     </div>
 
     <script>
-        // Load sidebar function
-        function loadSidebar() {
-            fetch('/assets/components/admin-sidebar.html')
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('sidebar-container').innerHTML = html;
-                    // Initialize sidebar functionality after loading
-                    initializeSidebar();
-                })
-                .catch(error => {
-                    console.log('Sidebar component not found, continuing without it');
-                });
-        }
-
-        // Initialize sidebar functionality
-        function initializeSidebar() {
-            // Apply current theme to sidebar immediately after loading
-            const currentTheme = localStorage.getItem('docutrack-theme') || 'light';
-            if (currentTheme === 'dark') {
-                document.body.classList.add('dark-theme');
-            }
-        }
-
         // Theme management
         const themeToggle = document.getElementById('theme-toggle');
         const themeLabel = document.getElementById('theme-label');
@@ -465,53 +430,6 @@
             themeToggle.dispatchEvent(new Event('change'));
         }
 
-        // Sidebar functions (these will be available globally)
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('main-content');
-            const toggleIcon = document.getElementById('toggle-icon');
-            
-            if (sidebar && mainContent && toggleIcon) {
-                sidebar.classList.toggle('retracted');
-                mainContent.classList.toggle('expanded');
-                
-                if (sidebar.classList.contains('retracted')) {
-                    toggleIcon.classList.remove('fa-bars');
-                    toggleIcon.classList.add('fa-times');
-                } else {
-                    toggleIcon.classList.remove('fa-times');
-                    toggleIcon.classList.add('fa-bars');
-                }
-            }
-        }
-
-        // Modal functions
-        function openLogoutModal() {
-            const modal = document.getElementById('logoutModal');
-            if (modal) {
-                modal.classList.remove('hidden');
-            }
-        }
-
-        function closeLogoutModal() {
-            const modal = document.getElementById('logoutModal');
-            if (modal) {
-                modal.classList.add('hidden');
-            }
-        }
-
-        function confirmLogout() {
-            // Add your logout logic here
-            alert('Logged out successfully');
-            closeLogoutModal();
-        }
-
-        // Navigation function
-        function navigateToSection(section) {
-            console.log('Navigating to:', section);
-            // Add your navigation logic here
-        }
-
         // Save settings
         function saveSettings() {
             const theme = themeToggle.checked ? 'dark' : 'light';
@@ -557,6 +475,17 @@
             }
         }
 
+        function loadSidebar() {
+            fetch('/assets/components/admin-sidebar.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('sidebar-container').innerHTML = html;
+                })
+                .catch(() => {
+                    console.log('Sidebar component not found, continuing without it');
+                });
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadSettings();
@@ -564,8 +493,6 @@
         });
     </script>
 
-    <!-- Include sidebar JavaScript -->
     <script src="/assets/javascript/admin-sidebar.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
 </body>
 </html>

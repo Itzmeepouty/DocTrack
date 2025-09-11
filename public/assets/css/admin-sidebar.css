@@ -2,7 +2,7 @@
 .sidebar {
     width: 20vw;
     min-width: 280px;
-    transition: all 0.3s ease;
+    transition: width 0.3s ease, min-width 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     position: fixed;
     left: 0;
     top: 0;
@@ -18,7 +18,7 @@
 /* Main content adjusts based on sidebar width */
 .main-content {
     margin-left: 20vw;
-    transition: all 0.3s ease;
+    transition: margin-left 0.3s ease, padding 0.3s ease;
     padding: 2rem;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .sidebar-item {
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, border-left 0.3s ease;
     white-space: nowrap;
     position: relative;
 }
@@ -40,7 +40,7 @@
 
 .sidebar-text {
     opacity: 1;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, width 0.3s ease;
     display: inline-block;
 }
 
@@ -70,7 +70,7 @@
     position: absolute;
     top: 1.5rem;
     right: 1rem;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, right 0.3s ease, top 0.3s ease;
     z-index: 10;
 }
 
@@ -94,7 +94,7 @@
 /* Hover animations for sidebar items */
 .sidebar-item {
     transform: translateX(0);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
     position: relative;
     overflow: visible;
 }
@@ -145,7 +145,7 @@
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
     z-index: 1001;
     pointer-events: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -175,7 +175,7 @@
 
 /* Logo hover animation */
 .sidebar .w-12.h-12 {
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .sidebar .w-12.h-12:hover {
@@ -185,7 +185,7 @@
 
 /* Toggle button hover animation */
 .sidebar button[onclick="toggleSidebar()"] {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .sidebar button[onclick="toggleSidebar()"]:hover {
@@ -276,7 +276,7 @@
 .hover\:bg-white:hover { background-color: #ffffff; }
 .hover\:bg-opacity-50:hover { background-color: rgba(255, 255, 255, 0.5); }
 .hover\:bg-red-50:hover { background-color: #fef2f2; }
-.transition-colors { transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out; }
+.transition-colors { transition: color 0.15s ease-in-out; }
 .space-y-2 > * + * { margin-top: 0.5rem; }
 .border-gray-200 { border-color: #e5e7eb; }
 .absolute { position: absolute; }

@@ -29,9 +29,6 @@ body { font-family: 'Inter', sans-serif; }
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.card-hover {
-    transition: all 0.3s ease;
-}
 
 .card-hover:hover {
     transform: translateY(-2px);
@@ -58,7 +55,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .btn-primary {
     background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
-    transition: all 0.3s ease;
+    
 }
 
 .btn-primary:hover {
@@ -69,17 +66,13 @@ body { font-family: 'Inter', sans-serif; }
 
 .btn-update {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    transition: all 0.3s ease;
+    
 }
 
 .btn-update:hover {
     background: linear-gradient(135deg, #059669 0%, #047857 100%);
     transform: translateY(-1px);
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-}
-
-.search-input {
-    transition: all 0.3s ease;
 }
 
 .search-input:focus {
@@ -108,7 +101,7 @@ body { font-family: 'Inter', sans-serif; }
 /* Enhanced Modal Styles */
 .modal-backdrop {
     backdrop-filter: blur(12px);
-    transition: all 0.3s ease;
+    
 }
 
 .modal-container {
@@ -138,7 +131,7 @@ body { font-family: 'Inter', sans-serif; }
 .form-input {
     background: rgba(255, 255, 255, 0.8);
     border: 1.5px solid rgba(229, 231, 235, 0.8);
-    transition: all 0.3s ease;
+    
     position: relative;
 }
 
@@ -186,7 +179,7 @@ body { font-family: 'Inter', sans-serif; }
     background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
     color: #374151;
     border: 1px solid rgba(209, 213, 219, 0.8);
-    transition: all 0.3s ease;
+    
 }
 
 .btn-cancel:hover {

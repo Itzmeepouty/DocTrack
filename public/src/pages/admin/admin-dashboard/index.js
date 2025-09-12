@@ -1,6 +1,9 @@
-import { initializeUserTable, UserTableManager } from "./modules/table_init.js";
-import { loadSidebar } from "./modules/utils/sidebar.js";
-import { loadTheme } from "../../../assets/javascript/theme-manager.js";
+// Main entry point for the admin dashboard
+import SidebarLoader from './modules/utils/sidebar-loader.js';
+import OfficesCard from './modules/core/offices-card.js';
+import UsersCard from './modules/core/users-card.js';
+import ActivityLogs from './modules/core/activity-logs.js';
+import { loadTheme } from '../../../../assets/javascript/theme-manager.js';
 
 document.addEventListener('DOMContentLoaded', async function() {
     const token = localStorage.getItem('token');
@@ -22,10 +25,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             throw new Error("Invalid token");
         }
 
+        // Apply theme before initializing components
         loadTheme();
         
-        loadSidebar();
-        initializeUserTable();
+        SidebarLoader.init();
+        OfficesCard.init();
+        UsersCard.init();
+        ActivityLogs.init();
 
     } catch (err) {
         console.error("Auth check failed:", err);

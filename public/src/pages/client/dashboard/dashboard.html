@@ -10,7 +10,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Include sidebar CSS -->
-    <link rel="stylesheet" href="assets/css/sidebar-css.css">
+    <link rel="stylesheet" href="/assets/css/sidebar-css.css">
     <style>
         body { font-family: 'Inter', sans-serif; }
         
@@ -44,10 +44,6 @@
     </style>
 </head>
 <body class="gradient-bg min-h-screen">
-    <!-- Include sidebar HTML -->
-    <!-- You can use server-side includes or a templating engine like EJS -->
-    <!-- For example with EJS: <%- include('sidebar') %> -->
-    <!-- Or with plain HTML: -->
     <div id="sidebar-container">
         <!-- Content will be loaded here -->
     </div>
@@ -247,11 +243,11 @@
     </div>
 
     <!-- Include sidebar JavaScript -->
-    <script src="assets/javascript/sidebar-script.js"></script>
+    <script src="/assets/javascript/sidebar-script.js"></script>
     <script>
         // Load sidebar content (if not using server-side includes)
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('assets/components/sidebar.html')
+            fetch('/assets/components/sidebar.html')
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('sidebar-container').innerHTML = html;

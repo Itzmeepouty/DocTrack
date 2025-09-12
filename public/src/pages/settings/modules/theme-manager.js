@@ -43,9 +43,6 @@ export default class ThemeManager {
         this.settingsCard.classList.replace('glass-effect-dark', 'glass-effect');
         this.settingsCard.classList.replace('subtle-shadow-dark', 'subtle-shadow');
 
-        this.systemSettingsCard.classList.replace('glass-effect-dark', 'glass-effect');
-        this.systemSettingsCard.classList.replace('subtle-shadow-dark', 'subtle-shadow');
-
         this.themeLabel.textContent = 'Light';
         this.darkPreview.classList.remove('active');
         this.lightPreview.classList.add('active');

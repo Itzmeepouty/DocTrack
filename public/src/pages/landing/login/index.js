@@ -39,7 +39,7 @@ async function loginUser(event){
                 if (accPermission === "admin"){
                     window.location.href = '/admin/dashboard';
                 } else if (accPermission === "user") {
-                    window.location.href = '/dashboard';
+                    window.location.href = '/client/dashboard';
                 } else {
                     window.location.href = '/error';
                 }

@@ -68,7 +68,7 @@ async function loginUsercontroller(req, res) {
         acc_status: user.acc_status
       },
       process.env.JWT_SECRET,
-      { expiresIn: '15m' }
+      { expiresIn: '24h' }
     );
 
     const refreshToken = jwt.sign(

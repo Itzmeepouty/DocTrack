@@ -138,6 +138,33 @@ async function verifyUserAccountById(employee_id, inputCode) {
   }
 }
 
+async function updateUserStatus(employee_id, acc_status) {
+  if(!acc_status || !employee_id) {
+    throw new Error('Invalid data provided');
+  }
+
+  const sql =`update staffs set acc_status = @acc_status where employee_id = @employee_id`;
+
+  try {
+    const result = await query(sql, {
+      acc_status: acc_status,
+      employee_id: employee_id
+    });
+
+    const currentTime = new Date().toISOString();
+    const log_sql = `
+      insert into activity_log (log_title, log_desc, log_type, created_datetime)
+      values ('Employee Status Updated', 'Employee ${employee_id} status has been updated', 'Updated', @currentTime)
+    `;
+
+    await query(log_sql, {currentTime});
+
+    return result;
+  } catch (error) {
+    throw new Error('Error Updating Status: ', + error.message);
+  }
+}
+
 
 
 module.exports = {
@@ -146,5 +173,6 @@ module.exports = {
   createuser,
   getUserByEmailOrEmployeeId,
   verifyUserAccountById,
-  getUserCount
+  getUserCount,
+  updateUserStatus
 };

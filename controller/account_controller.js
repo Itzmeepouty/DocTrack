@@ -3,7 +3,8 @@ const { getUsers,
   createuser, 
   getUserByEmailOrEmployeeId, 
   verifyUserAccountById,
-  getUserCount } = require('../model/account_model.js');
+  getUserCount,
+  updateUserStatus } = require('../model/account_model.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
@@ -221,6 +222,31 @@ async function verifyuser(req, res) {
   }
 }
 
+//change User Status
+async function updateStatus(req,res) {
+  const {id} = req.params;
+  const {status} = req.body;
+
+  if(!id || !status) {
+    return res.status(400).json ({
+      error: 'Missing required field'
+    });
+  }
+
+  try {
+    const result = await updateUserStatus(id, status);
+    res.status(201).json({
+      message: 'Employee Status Updated',
+      status: result
+    });
+  } catch (error) {
+    console.error('Error updating employee status:', error);
+    res.status(500).json({
+      error: error.message || 'Internal server error'
+    });
+  }
+}
+
 module.exports = {
-  getAllUsers, loginUsercontroller, createUser, verifyuser, GetUserCount, logoutUser
+  getAllUsers, loginUsercontroller, createUser, verifyuser, GetUserCount, logoutUser, updateStatus
 };

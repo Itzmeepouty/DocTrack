@@ -2,7 +2,7 @@ import ThemeManager from './modules/theme-manager.js';
 import SettingsManager from './modules/setting-manager.js';
 import SidebarManager from './modules/sidebar-manager.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async function() {
     const themeManager = new ThemeManager({
         body: document.getElementById('body'),
         themeToggle: document.getElementById('theme-toggle'),
@@ -21,14 +21,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const sidebarManager = new SidebarManager('sidebar-container');
 
-    // Load initial settings
-    themeManager.loadTheme();
-    settingsManager.loadSettings();
-    sidebarManager.loadSidebar();
+    const token = localStorage. getItem('token');
 
-    // Expose global functions for inline HTML onclick
-    window.saveSettings = () => settingsManager.saveSettings();
-    window.resetSettings = () => settingsManager.resetSettings();
-    window.setLightTheme = () => themeManager.setLightTheme();
-    window.setDarkTheme = () => themeManager.setDarkTheme();
+    if(!token) {
+        window.location.href = '/login';
+        return;
+    }
+
+    try {
+        const res = await fetch ('/api/validate-token', {
+            method: 'GET',
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if(!res.ok){
+            throw new Error("Invalid token");
+        }
+
+        themeManager.loadTheme();
+        settingsManager.loadSettings();
+        sidebarManager.loadSidebar();
+
+        window.saveSettings = () => settingsManager.saveSettings();
+        window.resetSettings = () => settingsManager.resetSettings();
+        window.setLightTheme = () => themeManager.setLightTheme();
+        window.setDarkTheme = () => themeManager.setDarkTheme();
+    } catch (error) {
+        console.error('Auth check failed:', error);
+        localStorage.removeItem('token');
+        window.location.href = '/login';   
+    }
 });

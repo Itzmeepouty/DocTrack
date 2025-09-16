@@ -1,5 +1,5 @@
-import { initializeUserTable, UserTableManager } from "./modules/table_init.js";
-import { loadSidebar } from "./modules/utils/sidebar.js";
+import { UserManager } from "./modules/managers/UserManager.js";
+import { loadSidebar } from './modules/ui/sidebar.js';
 import { loadTheme } from '../../../../assets/javascript/theme-manager.js';
 
 document.addEventListener('DOMContentLoaded', async function() {
@@ -23,9 +23,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         loadTheme();
-        
         loadSidebar();
-        initializeUserTable();
+        UserManager.init();
 
     } catch (err) {
         console.error("Auth check failed:", err);

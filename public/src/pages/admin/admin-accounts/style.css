@@ -186,3 +186,155 @@ body.dark-theme .table-row:hover {
 body.dark-theme svg {
     color: inherit !important;
 }
+
+.modal-container {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-close-btn {
+    background: #f1f5f9;
+    color: #64748b;
+    transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.form-input {
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.form-input:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.form-input[readonly], .form-input.cursor-not-allowed {
+    background: #f9fafb;
+    color: #6b7280;
+    cursor: not-allowed;
+}
+
+select.form-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.btn-cancel:hover {
+    background: #f9fafb;
+}
+
+#deleteEmployeeBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Dark Theme Styles */
+.dark-theme .modal-container {
+    background: #334155;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+.dark-theme .modal-header {
+    background: #334155;
+    border-bottom: 1px solid #475569;
+}
+
+.dark-theme .modal-header h3 {
+    color: #ffffff;
+}
+
+.dark-theme .modal-header p {
+    color: #cbd5e1;
+}
+
+.dark-theme .modal-close-btn {
+    background: transparent;
+    color: #ffffff;
+}
+
+.dark-theme .modal-close-btn:hover {
+    background: #475569;
+    color: #ffffff;
+}
+
+.dark-theme .form-input {
+    border: 1px solid #475569;
+    background: #475569;
+    color: #ffffff;
+}
+
+.dark-theme .form-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dark-theme .form-input[readonly], .dark-themeform-input.cursor-not-allowed {
+    background: #475569;
+    color: #e2e8f0;
+    cursor: not-allowed;
+    border: 1px solid #475569;
+}
+
+.dark label {
+    color: #e2e8f0;
+}
+
+.dark select .form-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.dark-theme .btn-primary {
+    background: #3b82f6;
+    box-shadow: none;
+}
+
+.dark-theme .btn-primary:hover {
+    background: #2563eb;
+    transform: none;
+    box-shadow: none;
+}
+
+.dark-theme .btn-cancel {
+    border: none;
+    color: #ffffff;
+    background: #64748b;
+}
+
+.dark-theme .btn-cancel:hover {
+    background: #475569;
+}
+
+.dark #deleteEmployeeBtn {
+    background: #fca5a5;
+    color: #dc2626;
+    border: none;
+}
+
+.dark #deleteEmployeeBtn:hover {
+    background: #f87171;
+    transform: none;
+    box-shadow: none;
+}

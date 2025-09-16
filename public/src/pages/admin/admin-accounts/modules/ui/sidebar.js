@@ -4,10 +4,9 @@ function loadSidebar() {
         .then(html => {
             document.getElementById('sidebar-container').innerHTML = html;
         })
-        .catch(error => {
+        .catch(() => {
             console.log('Sidebar component not found, continuing without it');
         });
 }
-
 
 export { loadSidebar };

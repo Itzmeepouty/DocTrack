@@ -147,8 +147,8 @@ async function updateUserStatus(employee_id, acc_status) {
 
   try {
     const result = await query(sql, {
-      acc_status: acc_status,
-      employee_id: employee_id
+      employee_id: employee_id,
+      acc_status: acc_status
     });
 
     const currentTime = new Date().toISOString();

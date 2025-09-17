@@ -225,20 +225,24 @@ async function verifyuser(req, res) {
 //change User Status
 async function updateStatus(req,res) {
   const {id} = req.params;
-  const {status} = req.body;
+  const {acc_status} = req.body;
 
-  if(!id || !status) {
+  if(!id || !acc_status) {
     return res.status(400).json ({
       error: 'Missing required field'
     });
   }
 
   try {
-    const result = await updateUserStatus(id, status);
+    const result = await updateUserStatus(id, acc_status);
     res.status(201).json({
       message: 'Employee Status Updated',
-      status: result
+      status: {
+        employee_id: id,
+        acc_status: acc_status
+      }
     });
+
   } catch (error) {
     console.error('Error updating employee status:', error);
     res.status(500).json({

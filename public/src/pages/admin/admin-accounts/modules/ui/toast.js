@@ -4,7 +4,7 @@ export function showToast(message, type = 'info', duration = 3000, redirectUrl =
     if(!container) {
         container = document.createElement('div');
         container.id = 'toast-container';
-        container.classname = 'fixed bottom-4 right-4 z-[10000] space-y-3 w-full max-w-xs';
+        container.className = 'fixed bottom-4 right-4 z-[10000] space-y-3 w-full max-w-xs';
         document.body.appendChild(container);
     }
 

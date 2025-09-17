@@ -52,6 +52,9 @@ export const UserManager = {
     },
 
     bindEvents() {
+
+        document.getElementById('updateEmployeeForm')?.addEventListener('submit', e => this.modal.handleUpdateStatus(e));
+        
         document.getElementById('statusFilter')?.addEventListener('change', () => {
             this.applyFilters();
         });

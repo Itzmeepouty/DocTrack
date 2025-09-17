@@ -35,19 +35,15 @@ export class ModalManager {
 
         try {
             const updated = await UserAPi.update(id, { id, status: newStatus });
+            const existing = UserState.getById(id);
 
-            // Update state with normalized object
             UserState.update({
-                id: updated.employee_id,
-                name: `${updated.fname} ${updated.mname ? updated.mname + ' ' : ''}${updated.lname}`,
-                email: updated.email,
-                office: updated.office,
-                role: updated.acc_permission,
-                status: updated.acc_status
+                ...existing,
+                status: updated.status.acc_status
             });
 
-            this.table.render();
             Toast.success("User status updated successfully!");
+            this.table.render();
             this.closeAll();
         } catch (err) {
             Toast.error("Failed to update user status");

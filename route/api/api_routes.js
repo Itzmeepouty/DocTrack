@@ -23,7 +23,7 @@ router.post('/signup', createUser);
 router.post('/verify',verifyuser);
 router.get('/users/count', GetUserCount);
 router.post('/logout', logoutUser)
-router.put('/update-status/:id', updateOffice);
+router.put('/users/update/status/:id', updateStatus);
 
 
 //office management

@@ -18,8 +18,7 @@ export const UserAPi = {
     },
 
     update(id, data) {
-        return this.request(`/api/update-status/${id}`, 'PUT', {
-            employee_id: data.id,
+        return this.request(`/api/users/update/status/${id}`, 'PUT', {
             acc_status : data.status
         });
     }

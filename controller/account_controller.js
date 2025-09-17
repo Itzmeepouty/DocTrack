@@ -4,7 +4,8 @@ const { getUsers,
   getUserByEmailOrEmployeeId, 
   verifyUserAccountById,
   getUserCount,
-  updateUserStatus } = require('../model/account_model.js');
+  updateUserStatus,
+  deleteUser } = require('../model/account_model.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
@@ -251,6 +252,44 @@ async function updateStatus(req,res) {
   }
 }
 
+//delete user account
+async function deleteAccount(req, res) {
+  const { employee_id } = req.params;  // ✅ get the actual ID
+
+  if (!employee_id) {
+    return res.status(400).json({ error: 'Employee ID is required' });
+  }
+
+  try {
+    const result = await deleteUser(employee_id);
+
+    if (!result) {
+      return res.status(500).json({
+        error: 'Unexpected error: No result returned from database operation'
+      });
+    }
+
+    const affectedRows = result.affectedRows || 0;
+
+    return res.status(200).json({
+      message: 'Employee deleted successfully',
+      affectedRows
+    });
+  } catch (error) {
+    console.error('Error deleting account:', error);
+    res.status(500).json({
+      error: error.message || 'Internal server error'
+    });
+  }
+}
+
 module.exports = {
-  getAllUsers, loginUsercontroller, createUser, verifyuser, GetUserCount, logoutUser, updateStatus
+  getAllUsers,
+  loginUsercontroller,
+  createUser,
+  verifyuser,
+  GetUserCount,
+  logoutUser,
+  updateStatus,
+  deleteAccount
 };

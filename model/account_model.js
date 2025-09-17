@@ -165,6 +165,39 @@ async function updateUserStatus(employee_id, acc_status) {
   }
 }
 
+async function deleteUser(employee_id) {
+  if (!employee_id) {
+    throw new Error(`Employee not found`);
+  }
+
+  const sql = `DELETE FROM staffs WHERE employee_id = @employee_id`;
+
+  try {
+    const result = await query(sql, { employee_id });
+
+    const log_sql = `
+      INSERT INTO activity_log (log_title, log_desc, log_type, created_datetime)
+      VALUES (@log_title, @log_desc, @log_type, @currentTime)
+    `;
+
+    const currentTime = new Date().toISOString();
+    await query(log_sql, {
+      log_title: 'Employee Account Deleted',
+      log_desc: `Account ${employee_id} has been deleted`,
+      log_type: 'Deleted',
+      currentTime
+    });
+
+    return {
+      affectedRows: result?.affectedRows || 0,
+      rowCount: result?.rowCount || 0,
+      ...result
+    };
+  } catch (error) {
+    console.error('Error deleting Employee account:', error);
+    throw new Error('Error deleting Employee account: ' + error.message);
+  }
+}
 
 
 module.exports = {
@@ -174,5 +207,6 @@ module.exports = {
   getUserByEmailOrEmployeeId,
   verifyUserAccountById,
   getUserCount,
-  updateUserStatus
+  updateUserStatus,
+  deleteUser
 };

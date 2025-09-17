@@ -6,6 +6,7 @@ export class ModalManager {
     constructor(table) {
         this.table = table;
         this.updateModal = document.getElementById('updateStatusModal');
+        this.deleteModal = document.getElementById('deleteConfirmModal');
 
         if(this.updateModal) {
             this.updateModal.querySelectorAll('.modal-close-btn').forEach(btn => {
@@ -25,6 +26,10 @@ export class ModalManager {
         document.getElementById('employeeOfficeDisplay').textContent = user.office;
         document.getElementById('employeeRoleDisplay').textContent = user.role;
         document.getElementById('updateEmployeeStatus').value = user.status;
+
+        document.getElementById('deleteEmployeeBtn').onclick = () => {
+            this.confirmDelete(user.id);
+        }
     }
 
     async handleUpdateStatus(e) {
@@ -49,6 +54,30 @@ export class ModalManager {
             Toast.error("Failed to update user status");
             console.error(err);
         }
+    }
+
+    async confirmDelete(id) {
+        const modal = document.getElementById('deleteConfirmModal');
+        modal.classList.remove('hidden');
+
+        document.getElementById('cancelDeleteBtn').onclick = () => {
+            modal.classList.add('hidden');
+        };
+
+        document.getElementById('confirmDeleteBtn').onclick = async () => {
+            try {
+                await UserAPi.delete(id);
+                UserState.remove(id);
+                this.table.render();
+                Toast.success('Account deleted successfully')
+            } catch (error) {
+                Toast.error('Failed to delete account');
+                console.error(error);
+            } finally {
+                modal.classList.add('hidden');
+                this.closeAll();
+            }
+        };
     }
 
     closeAll() {

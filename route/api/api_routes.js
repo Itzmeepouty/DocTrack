@@ -6,7 +6,8 @@ const { getAllUsers,
     verifyuser, 
     GetUserCount,
     logoutUser,
-    updateStatus } = require('../../controller/account_controller.js');
+    updateStatus,
+    deleteAccount } = require('../../controller/account_controller.js');
 const { getAllOffices, 
     getAllActiveOffices,
     GetOfficeCount, 
@@ -24,6 +25,7 @@ router.post('/verify',verifyuser);
 router.get('/users/count', GetUserCount);
 router.post('/logout', logoutUser)
 router.put('/users/update/status/:id', updateStatus);
+router.delete('/users/delete/:employee_id', deleteAccount);
 
 
 //office management

@@ -21,5 +21,9 @@ export const UserAPi = {
         return this.request(`/api/users/update/status/${id}`, 'PUT', {
             acc_status : data.status
         });
+    },
+
+    delete(id){
+        return this.request(`/api/users/delete/${id}`, 'DELETE');
     }
 }

@@ -6,18 +6,13 @@ import ActivityLogs from './modules/core/activity-logs.js';
 import { loadTheme } from '../../../../assets/javascript/theme-manager.js';
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-        window.location.href = '/login';
-        return;
-    }
 
     try {
         const res = await fetch('/api/validate-token', {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`
+                method: 'GET',
+                credentials: 'include',
             }
         });
 

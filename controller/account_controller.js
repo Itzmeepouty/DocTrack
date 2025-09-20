@@ -79,16 +79,31 @@ async function loginUsercontroller(req, res) {
       { expiresIn: '7d' }
     );
 
+    // Set HTTPOnly cookies
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000
+    });
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000 
+    });
+
     console.log(`✅ Login successful for user: ${email}`);
 
     return res.status(200).json({
-      accessToken,
-      refreshToken,
+      message: 'Login successful',
       user: {
         id: user.employee_id,
         email: user.email,
         name: `${user.fname} ${user.lname}`,
-        role: user.acc_permission
+        role: user.acc_permission,
+        acc_status: user.acc_status
       }
     });
 
@@ -101,18 +116,29 @@ async function loginUsercontroller(req, res) {
 //logout controller
 async function logoutUser(req, res) {
   try {
-    const authHeader = req.headers['authorization'];
-    if (!authHeader) return res.status(400).json({ error: 'Token required' });
+    const token = req.cookies.accessToken || (req.headers['authorization'] && req.headers['authorization'].split(' ')[1]);
+    
+    if (!token) {
+      res.clearCookie('accessToken');
+      res.clearCookie('refreshToken');
+      return res.status(200).json({ message: 'Logged out successfully' });
+    }
 
-    const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+    
     addToBlacklist(decoded.jti, decoded.exp);
+
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
 
     return res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
     console.error('Error during logout:', error);
-    return res.status(400).json({ error: 'Invalid token' });
+    
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
+    
+    return res.status(200).json({ message: 'Logged out successfully' });
   }
 }
 

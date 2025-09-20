@@ -28,10 +28,7 @@ async function confirmLogout() {
         if (token) {
             await fetch('/api/logout', {
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
+                credentials: 'include'
             });
         }
         

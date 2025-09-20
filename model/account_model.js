@@ -77,7 +77,7 @@ async function createuser(user) {
     const log_sql = `INSERT INTO activity_log (log_title, log_desc, log_type, created_datetime) 
       VALUES ('New User Account Created', CONCAT(@fname, ' ', @mname, ' ',  @lname, ' (${officeName}) - ID : ', @employee_id), 'Created', @currentTime)`;
     
-    await query(log_sql, user);
+    await query(log_sql,{ ...user, currentTime });
     
     return result;
   } catch (error) {

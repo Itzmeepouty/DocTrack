@@ -6,37 +6,39 @@ function togglePassword() {
     document.getElementById('eye-closed').classList.toggle('hidden', !isHidden);
 }
 
-async function loginUser(event){
+async function loginUser(event) {
     event.preventDefault();
 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const loginBtn = document.getElementById('loginbtn');
+    const originalText = loginBtn.textContent;
 
-    try{
+    try {
+        loginBtn.textContent = 'Logging in...';
+        loginBtn.disabled = true;
+
         const res = await fetch('/api/login', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, password }),
+            credentials: 'include'
         });
 
         const data = await res.json();
         
         if (res.ok) {
-            const token = data.accessToken;
-            localStorage.setItem('token', token);
+            // localStorage.setItem('user', JSON.stringify(data.user));
+            
+            const accStatus = data.user.acc_status?.toLowerCase();
+            const accPermission = data.user.role?.toLowerCase();
+            const email = data.user.email;
+            const employee_id = data.user.id;
 
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            const accStatus = payload.acc_status?.toLowerCase();
-            const accPermission = payload.role?.toLowerCase();
-            const email = payload.email;
-            const employee_id = payload.id;
-
-            localStorage.setItem('employee_id', employee_id);
-
-            if(accStatus ==="unverified"){
-                    window.location.href = `/verify?email=${encodeURIComponent(email)}&employee_id=${employee_id}`;
-            } else if (accStatus === "activated"){
-                if (accPermission === "admin"){
+            if (accStatus === "unverified") {
+                window.location.href = `/verify?email=${encodeURIComponent(email)}&employee_id=${employee_id}`;
+            } else if (accStatus === "activated") {
+                if (accPermission === "admin") {
                     window.location.href = '/admin/dashboard';
                 } else if (accPermission === "user") {
                     window.location.href = '/client/dashboard';
@@ -44,15 +46,19 @@ async function loginUser(event){
                     window.location.href = '/error';
                 }
             } else {
-                alert ("Unknown account status. Please contact support.");
+                alert("Unknown account status. Please contact support.");
                 window.location.href = '/login';
             }
         } else {
             alert(`Error: ${data.error || 'Login failed'}`);
+            loginBtn.textContent = originalText;
+            loginBtn.disabled = false;
         }
     } catch (err) {
         console.error('Error during login:', err);
         alert('An error occurred while trying to log in. Please try again later.');
+        loginBtn.textContent = originalText;
+        loginBtn.disabled = false;
     } 
 }
 

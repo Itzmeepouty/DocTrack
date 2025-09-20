@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 const os = require('os');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const route = require('./route/api/api_routes.js');
 
@@ -13,6 +14,7 @@ const pageRoute = require('./route/pages/page_route.js');
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public/')));
+app.use(cookieParser());
 
 //used for backend api routing
 app.use('/api', route);

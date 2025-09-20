@@ -10,10 +10,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     try {
         const res = await fetch('/api/validate-token', {
             method: 'GET',
-            headers: {
-                method: 'GET',
-                credentials: 'include',
-            }
+            credentials: 'include',
         });
 
         if (!res.ok) {

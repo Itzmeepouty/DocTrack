@@ -3,19 +3,12 @@ import { loadSidebar } from './modules/ui/sidebar.js';
 import { loadTheme } from '../../../../assets/javascript/theme-manager.js';
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-        window.location.href = '/login';
-        return;
-    }
+    
 
     try {
         const res = await fetch('/api/validate-token', {
             method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
+            credentials: 'include'
         });
 
         if (!res.ok) {

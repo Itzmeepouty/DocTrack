@@ -21,19 +21,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     const sidebarManager = new SidebarManager('sidebar-container');
 
-    const token = localStorage. getItem('token');
-
-    if(!token) {
-        window.location.href = '/login';
-        return;
-    }
-
     try {
         const res = await fetch ('/api/validate-token', {
             method: 'GET',
-            headers:{
-                'Authorization': `Bearer ${token}`
-            }
+            credentials: 'include',
         });
 
         if(!res.ok){

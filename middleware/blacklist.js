@@ -1,9 +1,18 @@
 const blacklist = new Set();
 
-function addToBlacklist(jti, exp) {
+function addToBlacklist(jti, expSeconds) {
+  if (!jti) return;
   blacklist.add(jti);
 
-  setTimeout(() => blacklist.delete(jti), (exp * 1000) - Date.now());
+  const nowMS = Date.now();
+  const expMS = (expSeconds || 0) * 1000;
+  const ttl = expMS - nowMS;
+
+  const delay = ttl > 0 ? ttl : 5000;
+
+  setTimeout(() => {
+    blacklist.delete(jti);
+  }, delay);
 }
 
 function isBlacklisted(jti) {

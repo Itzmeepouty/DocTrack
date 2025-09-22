@@ -24,14 +24,11 @@ function closeLogoutModal() {
 
 async function confirmLogout() {
     try {
-        const token = localStorage.getItem('token');
-        if (token) {
-            await fetch('/api/logout', {
-                method: 'POST',
-                credentials: 'include'
-            });
-        }
-        
+        await fetch('/api/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+
         localStorage.clear();
         window.location.href = '/login';
     } catch (err) {

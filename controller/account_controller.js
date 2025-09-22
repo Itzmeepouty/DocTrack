@@ -116,29 +116,27 @@ async function loginUsercontroller(req, res) {
 //logout controller
 async function logoutUser(req, res) {
   try {
-    const token = req.cookies.accessToken || (req.headers['authorization'] && req.headers['authorization'].split(' ')[1]);
-    
-    if (!token) {
-      res.clearCookie('accessToken');
-      res.clearCookie('refreshToken');
-      return res.status(200).json({ message: 'Logged out successfully' });
+    const token = req.cookies.accessToken || req.headers.authorization?.split(' ')[1];
+    if(token) {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      addToBlacklist(decoded.jti, decoded.exp);
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict'
+    });
     
-    addToBlacklist(decoded.jti, decoded.exp);
-
-    res.clearCookie('accessToken');
-    res.clearCookie('refreshToken');
-
-    return res.status(200).json({ message: 'Logged out successfully' });
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict'
+    });
+    res.status(200).json({ message: 'Logout successful' });
   } catch (error) {
     console.error('Error during logout:', error);
-    
-    res.clearCookie('accessToken');
-    res.clearCookie('refreshToken');
-    
-    return res.status(200).json({ message: 'Logged out successfully' });
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
 

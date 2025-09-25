@@ -128,7 +128,7 @@ async function verifyUserAccountById(employee_id, inputCode) {
     const log_sql = `INSERT INTO activity_log (log_title, log_desc, log_type, created_datetime) 
                     VALUES ('User Account Verification', 'Account (${employee_id}) is Verified', 'Verified', @currentTime)`;
     
-    await query(log_sql);
+    await query(log_sql, { currentTime });
 
     return { success: true, message: 'Account verified successfully' };
 

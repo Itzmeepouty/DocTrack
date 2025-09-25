@@ -8,10 +8,11 @@ const { getUsers,
   deleteUser } = require('../model/account_model.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
-const emailTemplates = require('../templates/email_template.js');
 const { v4: uuidv4 } = require('uuid');
 const { addToBlacklist } = require('../middleware/blacklist.js');
+
+// Import utility functions
+const { emailSender, generators } = require('../utils');
 
 //function to get all users
 async function getAllUsers(req, res) {
@@ -29,7 +30,8 @@ async function GetUserCount(req, res) {
     const count = await getUserCount();
     res.status(200).json(count);
   } catch (error) {
-
+    console.error('Error fetching user count:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
 
@@ -41,13 +43,6 @@ async function loginUsercontroller(req, res) {
     const user = await loginUser(email);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
-    }
-
-    if (user.acc_status !== 'activated') {
-      return res.status(403).json({ error: 'Account not verified' });
-    }
-    if (!user.is_active) {
-      return res.status(403).json({ error: 'Account is inactive' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.passs);
@@ -140,18 +135,6 @@ async function logoutUser(req, res) {
   }
 }
 
-// Function to generate a random verification code
-function generateVerfication(length = 6) {
-  const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  let verificationCode = '';
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    verificationCode += characters[randomIndex];
-  }
-  return verificationCode;
-} 
-
-
 async function createUser(req, res) {
   const { employee_id, fname, mname, lname, office, email, passs } = req.body;
   
@@ -166,7 +149,7 @@ async function createUser(req, res) {
     }
 
     const hashedPassword = await bcrypt.hash(passs, 10);
-    const verification_code = generateVerfication();
+    const verification_code = generators.generateVerificationCode();
     const hashedCode = await bcrypt.hash(verification_code, 10);
 
     const user = {
@@ -184,7 +167,7 @@ async function createUser(req, res) {
     };
 
     const result = await createuser(user);
-    await sendVerificationEmail(email, verification_code);
+    await emailSender.sendVerificationEmail(email, verification_code);
     
     res.status(201).json({ 
       message: 'User created successfully. Please check your email for verification.',
@@ -201,25 +184,6 @@ async function createUser(req, res) {
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
-}
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
-
-async function sendVerificationEmail(email, verificationCode) {
-  const mailOptions = {
-    from: `"DocuTrack" <${process.env.EMAIL_USER}>`,
-    to: email,
-    subject: 'Verify Your DocuTrack Account',
-    html: emailTemplates.verificationEmail(email, verificationCode)
-  };
-
-  return transporter.sendMail(mailOptions);
 }
 
 //verify user account controller
@@ -278,7 +242,7 @@ async function updateStatus(req,res) {
 
 //delete user account
 async function deleteAccount(req, res) {
-  const { employee_id } = req.params;  // ✅ get the actual ID
+  const { employee_id } = req.params;
 
   if (!employee_id) {
     return res.status(400).json({ error: 'Employee ID is required' });

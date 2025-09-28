@@ -51,4 +51,9 @@ const path = require('path');
     res.sendFile(path.join(__dirname, '../../public/src/pages/admin/admin-office/office-management.html'));
   });
 
+  //transaction management page
+  router.get('/transaction/management', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/src/pages/admin/admin-transactions/transactions-management.html'));
+  });
+
 module.exports = router;

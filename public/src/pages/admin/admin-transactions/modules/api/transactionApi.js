@@ -15,5 +15,9 @@ export const transactionApi = {
 
     fetchTableData() {
         return this.request('/api/transactions', 'GET');
+    },
+
+    fetchTransactionCount(){
+        return this.request('/api/transaction/count', 'GET');
     }
 }

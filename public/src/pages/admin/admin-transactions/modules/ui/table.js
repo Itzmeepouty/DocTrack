@@ -104,7 +104,7 @@ export class TransactionTable {
         for (let i = 1; i <= totalPages; i++) {
             const btn = document.createElement('button');
             btn.textContent = i;
-            btn.className = `mx-1 px-3 py-1 rounded ${i === this.currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`;
+            btn.className = `px-3 py-2 rounded ${i === this.currentPage ? 'bg-blue-600 text-white' : 'border'}`;
             btn.onclick = () => {
                 this.currentPage = i;
                 this.render();

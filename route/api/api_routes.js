@@ -15,7 +15,9 @@ const { getAllOffices,
     updateOffice, 
     deleteoffice } = require('../../controller/office_controller.js');
 const { getAllLogs } = require('../../controller/log_controller.js');
-const { getTableTransactions } = require('../../controller/transaction_controller.js');
+const { getTableTransactions,
+    getTransactionCount
+ } = require('../../controller/transaction_controller.js');
 const { authenticateToken } = require('../../middleware/auth.js');
 
 //account management
@@ -39,6 +41,7 @@ router.delete('/office/delete/:id', deleteoffice);
 
 //transaction management
 router.get('/transactions', getTableTransactions);
+router.get('/transaction/count', getTransactionCount);
 
 //log management
 router.get('/logs', getAllLogs);

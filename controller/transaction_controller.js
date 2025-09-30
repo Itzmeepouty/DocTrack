@@ -1,4 +1,6 @@
-const { tableTransactions } = require('../model/transaction_model.js');
+const { tableTransactions,
+    getCountbyStatus
+ } = require('../model/transaction_model.js');
 
 async function getTableTransactions(req, res) {
     try {
@@ -10,6 +12,17 @@ async function getTableTransactions(req, res) {
     }
 }
 
+async function getTransactionCount(req, res){
+    try {
+        const count  = await getCountbyStatus();
+        res.status(200).json(count);
+    } catch (error) {
+        console.error('Error retrieving transaction count:', error);
+        res.status(500).json({error: 'Internal Server Error'});
+    }
+}
+
 module.exports = {
-    getTableTransactions
+    getTableTransactions,
+    getTransactionCount
 };

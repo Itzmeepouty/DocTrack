@@ -2,7 +2,7 @@ import { OfficeAPI } from "../api/officeApi.js";
 import { OfficeState } from "../state/officeState.js";
 import { OfficeTable } from "../ui/table.js";
 import { ModalManager } from "../ui/modal.js";
-import { Toast } from "../ui/toast.js";
+import { Toast } from "../../../../../../assets/javascript/toast.js";
 
 export const OfficeManager = {
     async init() {

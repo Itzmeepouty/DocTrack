@@ -9,7 +9,7 @@
  */
 
 import { offices } from './office_module.js';
-import { showToast } from './notif_module.js';
+import { Toast } from '../../../../../assets/javascript/toast.js';
 
 async function handleRegister(event) {
     event.preventDefault();
@@ -93,20 +93,20 @@ async function handleRegister(event) {
 
             if (response.ok) {
                 //successful registration
-                showToast('Registration successful! Please check your email for verification.', 'success', 3000, '/login');
+                Toast.success('Account Registered. Please verify');
             } else {
                 throw new Error(result.error || 'Registration failed');
             }
         } catch (error) {
             console.error('Registration error:', error);
-            showToast('Registration failed: ' + error.message, 'error', 3000);
+            Toast.error(`Error Registering Account : ${error}`);
         } finally {
             const registerBtn = document.getElementById('registerBtn');
             registerBtn.disabled = false;
             registerBtn.textContent = 'Sign Up';
         }
     } else {
-        showToast('Please fill out all required fields correctly.', 'error', 3000);
+        Toast.error('An error occured. Please try again.');
     }
 }
 

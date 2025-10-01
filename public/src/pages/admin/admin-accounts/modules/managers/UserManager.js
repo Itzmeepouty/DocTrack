@@ -2,7 +2,7 @@ import { UserAPi } from "../api/userApi.js";
 import { UserState } from "../state/userState.js";
 import { UserTable } from "../ui/table.js";
 import { ModalManager } from "../ui/modal.js";
-import { Toast } from "../ui/toast.js";
+import { Toast } from "../../../../../../assets/javascript/toast.js";
 
 export const UserManager = {
     async init() {

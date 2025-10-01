@@ -3,6 +3,7 @@ import SidebarLoader from './modules/utils/sidebar-loader.js';
 import OfficesCard from './modules/core/offices-card.js';
 import UsersCard from './modules/core/users-card.js';
 import ActivityLogs from './modules/core/activity-logs.js';
+import TransactionCard from './modules/core/transactions-card.js';
 import { loadTheme } from '../../../../assets/javascript/theme-manager.js';
 
 document.addEventListener('DOMContentLoaded', async function() {
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         SidebarLoader.init();
         OfficesCard.init();
         UsersCard.init();
+        TransactionCard.init();
         ActivityLogs.init();
 
     } catch (err) {

@@ -1,3 +1,5 @@
+import { Toast } from '../../../../assets/javascript/toast.js';
+
 function togglePassword() {
     const passwordInput = document.getElementById('password');
     const isHidden = passwordInput.type === 'password';
@@ -46,17 +48,17 @@ async function loginUser(event) {
                     window.location.href = '/error';
                 }
             } else {
-                alert("Unknown account status. Please contact support.");
+                Toast.error('Unknown account status. Please contact support.');
                 window.location.href = '/login';
             }
         } else {
-            alert(`Error: ${data.error || 'Login failed'}`);
+            Toast.error(`Error: ${data.error || 'Login failed'}`);
             loginBtn.textContent = originalText;
             loginBtn.disabled = false;
         }
     } catch (err) {
         console.error('Error during login:', err);
-        alert('An error occurred while trying to log in. Please try again later.');
+        Toast.error('An error occurred while trying to log in. Please try again later.');
         loginBtn.textContent = originalText;
         loginBtn.disabled = false;
     } 
@@ -73,3 +75,4 @@ AOS.init({
 
 
 document.getElementById('loginbtn').addEventListener('click', loginUser);
+document.getElementById('togglebtn').addEventListener('click', togglePassword);

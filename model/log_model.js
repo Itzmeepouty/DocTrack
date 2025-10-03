@@ -12,6 +12,28 @@ async function getLog(){
     }
 }
 
+async function insertLog(title, description, type) {
+    const sql = `
+        insert into activity_log (log_title, log_desc, log_type, created_datetime)
+        values (@title, @description, @type, @currentTime)
+    `;
+
+    const currentTime = new Date().toISOString();
+
+    try {
+        await query(sql,{
+            title, 
+            description,
+            type,
+            currentTime
+        });
+    } catch (error) {
+        console.error('Error inserting log:', error);
+        throw error;
+    }
+}
+
 module.exports = {
-    getLog 
+    getLog,
+    insertLog
 };

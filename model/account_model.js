@@ -1,5 +1,6 @@
 const { verify } = require('jsonwebtoken');
 const { query } = require('../db/dbconn.js');
+const { insertLog } = require ('../model/log_model.js');
 const bcrypt = require('bcryptjs');
 
 async function getUsers() {
@@ -73,12 +74,13 @@ async function createuser(user) {
       officeName = officeResult.office_name;
     }
     
-    const currentTime = new Date().toISOString();
-    const log_sql = `INSERT INTO activity_log (log_title, log_desc, log_type, created_datetime) 
-      VALUES ('New User Account Created', CONCAT(@fname, ' ', @mname, ' ',  @lname, ' (${officeName}) - ID : ', @employee_id), 'Created', @currentTime)`;
-    
-    await query(log_sql,{ ...user, currentTime });
-    
+    const fullName = `${user.fname} ${user.mname ?? ''} ${user.lname}`.trim();
+
+    await insertLog(
+      'New User Account Created',
+      `${fullName} (${officeName}) - ID : ${user.employee_id}`,
+      'Created'
+    );
     return result;
   } catch (error) {
     console.error('Error creating user:', error);
@@ -124,14 +126,12 @@ async function verifyUserAccountById(employee_id, inputCode) {
 
     await query(updateSql, { employee_id });
 
-    const currentTime = new Date().toISOString();
-    const log_sql = `INSERT INTO activity_log (log_title, log_desc, log_type, created_datetime) 
-                    VALUES ('User Account Verification', 'Account (${employee_id}) is Verified', 'Verified', @currentTime)`;
-    
-    await query(log_sql, { currentTime });
-
+    await insertLog(
+      'User Account Verification',
+      `Account (${employee_id}) is Verified`,
+      'Verified'
+    );
     return { success: true, message: 'Account verified successfully' };
-
   } catch (error) {
     console.error('Error verifying account:', error);
     throw error;
@@ -151,14 +151,11 @@ async function updateUserStatus(employee_id, acc_status) {
       acc_status: acc_status
     });
 
-    const currentTime = new Date().toISOString();
-    const log_sql = `
-      insert into activity_log (log_title, log_desc, log_type, created_datetime)
-      values ('Employee Status Updated', 'Employee ${employee_id} status has been updated', 'Updated', @currentTime)
-    `;
-
-    await query(log_sql, {currentTime});
-
+    await insertLog(
+      'Employee Status Updated',
+      `Employee ${employee_id} status has been updated`,
+      'Updated'
+    );
     return result;
   } catch (error) {
     throw new Error('Error Updating Status: ', + error.message);
@@ -175,19 +172,12 @@ async function deleteUser(employee_id) {
   try {
     const result = await query(sql, { employee_id });
 
-    const log_sql = `
-      INSERT INTO activity_log (log_title, log_desc, log_type, created_datetime)
-      VALUES (@log_title, @log_desc, @log_type, @currentTime)
-    `;
-
-    const currentTime = new Date().toISOString();
-    await query(log_sql, {
-      log_title: 'Employee Account Deleted',
-      log_desc: `Account ${employee_id} has been deleted`,
-      log_type: 'Deleted',
-      currentTime
-    });
-
+    await insertLog(
+      'Employee Account Deleted',
+      `Account ${employee_id} has been deleted`,
+      'Deleted',
+    );
+    
     return {
       affectedRows: result?.affectedRows || 0,
       rowCount: result?.rowCount || 0,

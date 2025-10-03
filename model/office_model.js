@@ -1,4 +1,5 @@
 const { query } = require('../db/dbconn.js');
+const { insertLog } = require ('../model/log_model.js');
 
 async function getOffices() {
   const sql = 'SELECT * FROM offices';
@@ -68,16 +69,11 @@ async function insertOffice(office) {
       is_active: office.is_active
     });
 
-    // log
-    console.log("Inserted office result:", result);
-
-    const currentTime = new Date().toISOString();
-    const log_query = `
-      INSERT INTO activity_log (log_title, log_desc, log_type, created_datetime)
-      VALUES ('New Office Created', 'Office ${office.office_name}(${office.office_abb}) has been created', 'Created', @currentTime)
-    `;
-
-    await query(log_query, { currentTime });
+    await insertLog(
+      'New Office Created',
+      `Office ${office.office_name}(${office.office_abb}) has been created`,
+      'Created'
+    );
 
     return result;
   } catch (error) {
@@ -113,14 +109,9 @@ async function statusCalibrate(office_id, office_name, office_abb, is_active) {
       office_id: officeId
     });
 
-    // Use current timestamp for the log (Philippine Time)
-    const currentTime = new Date().toISOString();
-    const log_sql = `
-      INSERT INTO activity_log (log_title, log_desc, log_type, created_datetime)
-      VALUES ('Office Updated', 'Office ${office_name}(${office_abb}) has been updated', 'Updated', @currentTime)
-    `;
-    
-    await query(log_sql, { currentTime });
+    await insertLog('Office Updated',
+      `Office ${office_name}(${office_abb}) has been updated`,
+      'Updated');
 
     return result;
   } catch (error) {
@@ -141,14 +132,11 @@ async function deleteOffice(office_id) {
   try {
     const result = await query(sql, { office_id });
 
-    const currentTime = new Date().toISOString();
-    const log_sql = `
-      INSERT INTO activity_log (log_title, log_desc, log_type, created_datetime)
-      VALUES ('Office Deleted', 'Office with ID ${office_id} has been deleted', 'Deleted', @currentTime)
-    `;
-    
-    await query(log_sql, { currentTime });
-    
+    await insertLog(
+      'Office Deleted',
+      `Office with ID ${office_id} has been deleted`,
+      'Deleted');
+      
     return {
       affectedRows: result?.affectedRows || 0,
       rowCount: result?.rowCount || 0,

@@ -1,4 +1,4 @@
-import { Toast } from "./toast.js";
+import { Toast } from '../../../../../../assets/javascript/toast.js';
 import { OfficeAPI } from "../api/officeApi.js";
 import { OfficeState } from "../state/officeState.js";
 
